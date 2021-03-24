@@ -9,7 +9,7 @@ out <- c(args[[5]])
 
 library("dada2")
 
-mergers <- mergePairs(dadaR1, derepR1, dadaR2, derepR2, verbose=TRUE)
+mergers <- mergePairs(dadaR1, derepR1, dadaR2, derepR2, verbose=TRUE, minOverlap = 20)
 
 saveRDS(mergers, out)
 

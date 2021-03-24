@@ -83,7 +83,7 @@ def prepare_sample_set_tsv_and_get_results(sample_set, sample_set_name, wc_confi
     if not os.path.isfile(os.path.join(dada2_set_dir, 'samples.tsv')):
         dada2_df.to_csv(os.path.join(dada2_set_dir, 'samples.tsv'), sep='\t', index=False)
 
-    res_list = ['{fs_prefix}/{df}/dada2/{sample_set}/learn_erros__{learn_errors_params}/seqtab_nochim__{min_overlap}.reads_count.tsv'.format(
+    res_list = ['{fs_prefix}/{df}/dada2/{sample_set}/learn_erros__{learn_errors_params}/seqtab_nochim__{min_overlap}.rds'.format(
         fs_prefix = fs_prefix,
         df = dfs[0],
         sample_set = sample_set_name,
