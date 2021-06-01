@@ -1,12 +1,12 @@
 merge_pooled_script = os.path.join(config['assnake-dada2']['install_dir'], 'merge/merge_pooled.R')
 rule dada2_merge_pooled:
     input: 
-        dada_1  = '{fs_prefix}/{df}/dada2/{sample_set}/learn_erros__{params}/dadaR1.rds',
-        dada_2  = '{fs_prefix}/{df}/dada2/{sample_set}/learn_erros__{params}/dadaR2.rds',
-        derep_1 = '{fs_prefix}/{df}/dada2/{sample_set}/learn_erros__{params}/derepR1.rds',
-        derep_2 = '{fs_prefix}/{df}/dada2/{sample_set}/learn_erros__{params}/derepR2.rds',
+        dada_1  = '{fs_prefix}/{df}/dada2/{sample_set}/learn_errors__{params}/dadaR1.rds',
+        dada_2  = '{fs_prefix}/{df}/dada2/{sample_set}/learn_errors__{params}/dadaR2.rds',
+        derep_1 = '{fs_prefix}/{df}/dada2/{sample_set}/learn_errors__{params}/derepR1.rds',
+        derep_2 = '{fs_prefix}/{df}/dada2/{sample_set}/learn_errors__{params}/derepR2.rds',
     output:
-        mergers = '{fs_prefix}/{df}/dada2/{sample_set}/learn_erros__{params}/mergers__{min_overlap}.rds',
+        mergers = '{fs_prefix}/{df}/dada2/{sample_set}/learn_errors__{params}/mergers__{min_overlap}.rds',
     wildcard_constraints:    
         sample_set="[\w\d_-]+",
         # err_params="[\w\d_-]+",

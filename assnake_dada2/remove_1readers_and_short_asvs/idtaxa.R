@@ -12,7 +12,7 @@ threads <- as.integer(args[[5]])
 threshold <- as.integer(args[[5]])
 
 
-wd_path = '/data11/bio/mg_data/COVID_FEB2021/dada2/merged/learn_erros__def.b0a376b5/'
+wd_path = '/data11/bio/mg_data/COVID_FEB2021/dada2/merged/learn_errors__def.b0a376b5/'
 # Load raw data
 seqtab <- readRDS(paste(wd_path, 'seqtab_nochim__20.rds', sep=''))
 rownames(seqtab) <- gsub('.{3}$', '', sapply(strsplit(rownames(seqtab), ".", fixed = TRUE), `[`, 1))
@@ -42,7 +42,7 @@ psasv
 
 # IDTAXA
 database <- "/ssd/DATABASES/SILVA_SSU_r138_2019.RData"
-fas <- "/data11/bio/mg_data/COVID_FEB2021/dada2/merged/learn_erros__def.b0a376b5/filtered_1_read_total_no_short/raw_seqs.fa"
+fas <- "/data11/bio/mg_data/COVID_FEB2021/dada2/merged/learn_errors__def.b0a376b5/filtered_1_read_total_no_short/raw_seqs.fa"
 # load the sequences from the file
 seqs <- readDNAStringSet(fas) # or readRNAStringSet
 # remove any gaps (if needed)

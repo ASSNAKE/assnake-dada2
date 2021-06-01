@@ -12,6 +12,8 @@ threads <- as.integer(args[[5]])
 
 read_tracking_loc <- c(args[[6]])
 
+seqtab_out <- c(args[[7]])
+
 
 library("dada2")
 reads <- read.table(file = read_table_loc, sep = '\t', header = TRUE)
@@ -29,6 +31,8 @@ poolR2 <- dada(derepR2, err=errR2, multithread=threads, pool=TRUE, verbose=TRUE)
 mergers <- mergePairs(poolR1, derepR1, poolR2, derepR2, verbose=TRUE, minOverlap = 18)
 saveRDS(mergers, out)
 
+seqtab <- makeSequenceTable(mergers)
+saveRDS(seqtab, seqtab_out)
 
 
 getN <- function(x) sum(getUniques(x))

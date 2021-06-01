@@ -6,4 +6,4 @@ infer_pooled_script = os.path.join(snakemake.config['assnake-dada2']['install_di
 
 shell('''export LANG=en_US.UTF-8;\nexport LC_ALL=en_US.UTF-8;\n
         Rscript  {infer_pooled_script} '{snakemake.input.samples_list}' \
-            '{snakemake.input.errR1}' '{snakemake.input.errR2}' '{snakemake.output.mergers}' {snakemake.threads} '{snakemake.output.track}' > {snakemake.log} 2>&1;\n''')
+            '{snakemake.input.errR1}' '{snakemake.input.errR2}' '{snakemake.output.mergers}' {snakemake.threads} '{snakemake.output.track}' '{snakemake.output.seqtab}' > {snakemake.log} 2>&1;\n''')

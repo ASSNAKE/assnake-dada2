@@ -1,15 +1,19 @@
-rule dada2_derep_infer_pooled_merge:
+rule idTaxa_annotate_16s:
     input: 
-        samples_list = '{fs_prefix}/{df}/dada2/{sample_set}/samples.tsv',
-        errR1          = '{fs_prefix}/{df}/dada2/{sample_set}/learn_erros__{params}/errR1.rds',
-        errR2          = '{fs_prefix}/{df}/dada2/{sample_set}/learn_erros__{params}/errR2.rds',
+        seqtab  = '{fs_prefix}/{df}/dada2/{sample_set}/learn_errors__{learn_errors_preset}/core_algo__{core_algo_preset}/merged__{merged_preset}/nonchim__{nonchim_preset}/seqtab.rds'
     output:
-        mergers = '{fs_prefix}/{df}/dada2/{sample_set}/learn_erros__{params}/mergers__{min_overlap}.rds',
-        track = '{fs_prefix}/{df}/dada2/{sample_set}/learn_erros__{params}/derep_dada_merge__{min_overlap}.reads_count.tsv'
-    log: '{fs_prefix}/{df}/dada2/{sample_set}/learn_erros__{params}/derep_dada_merge__{min_overlap}.log'
+        idtaxa_res = '{fs_prefix}/{df}/dada2/{sample_set}/learn_errors__{learn_errors_preset}/core_algo__{core_algo_preset}/merged__{merged_preset}/nonchim__{nonchim_preset}/idtaxa_res.rds',
+        idtaxa_table = '{fs_prefix}/{df}/dada2/{sample_set}/learn_errors__{learn_errors_preset}/core_algo__{core_algo_preset}/merged__{merged_preset}/nonchim__{nonchim_preset}/idtaxa.tsv'
+    log: '{fs_prefix}/{df}/dada2/{sample_set}/learn_errors__{learn_errors_preset}/core_algo__{core_algo_preset}/merged__{merged_preset}/nonchim__{nonchim_preset}/idtaxa.log'
 
     wildcard_constraints:    
         sample_set="[\w\d_-]+",
-    threads: 24
-    conda: '../dada2.yaml'
-    wrapper: "file://" + os.path.join(config['assnake-dada2']['install_dir'], 'derep_infer_merge/wrapper.py') 
+    threads: 100
+    conda: './env.yaml'
+    wrapper: "file://" + os.path.join(config['assnake-dada2']['install_dir'], 'idtaxa/wrapper.py') 
+
+# seqtab = `dada2/{sample_set}/{learn_errors__{learn_errors_preset}/core_algo__{core_algo_preset}/seqtab__{seqtab_preset}/filtering__{filtering_preset}/seqtab.rds`,
+# seqs = `dada2/{sample_set}/{learn_errors__{learn_errors_preset}/core_algo__{core_algo_preset}/seqtab__{seqtab_preset}/filtering__{filtering_preset}/sequences.fa`,
+
+
+

@@ -1,12 +1,12 @@
 import os
 rule picrust2_tree_insertion:
     input:
-        fasta = '{fs_prefix}/{df}/dada2/{sample_set}/learn_erros__{params}/filtered_1_read_total_no_short/raw_seqs.fa'
+        fasta = '{fs_prefix}/{df}/dada2/{sample_set}/learn_errors__{params}/filtered_1_read_total_no_short/raw_seqs.fa'
     output:
-        tree  = '{fs_prefix}/{df}/dada2/{sample_set}/learn_erros__{params}/filtered_1_read_total_no_short/placed_seqs.tre'
+        tree  = '{fs_prefix}/{df}/dada2/{sample_set}/learn_errors__{params}/filtered_1_read_total_no_short/placed_seqs.tre'
     params:
-        intermediate = '{fs_prefix}/{df}/dada2/{sample_set}/learn_erros__{params}/filtered_1_read_total_no_short/placement_working'
-    log:      '{fs_prefix}/{df}/dada2/{sample_set}/learn_erros__{params}/filtered_1_read_total_no_short/placement_working/log.txt'
+        intermediate = '{fs_prefix}/{df}/dada2/{sample_set}/learn_errors__{params}/filtered_1_read_total_no_short/placement_working'
+    log:      '{fs_prefix}/{df}/dada2/{sample_set}/learn_errors__{params}/filtered_1_read_total_no_short/placement_working/log.txt'
     wildcard_constraints:    
         df="[\w\d_-]+",
         params="[\w\d_-]+"

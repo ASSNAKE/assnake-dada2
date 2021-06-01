@@ -10,22 +10,32 @@ from assnake.core.result import Result
 
 
 @click.command('dada2-full', short_help='Execute full dada2 pipeline')
+
 @add_options(sample_set_construction_options)
 @click.option('--sample-set-name', 
                 help='Name of your sample set', 
                 default='',
                 type=click.STRING )
-@click.option('--learn-errors-params', 
+@click.option('--learn-errors-preset', 
                 help='Parameters for learn errors', 
                 default='def',
                 type=click.STRING )
-@click.option('--min-overlap', 
-                help='Minimum overlap when merging reads', 
-                default='20',
+@click.option('--core-algo-preset', 
+                help='Parameters for core dada2 algo', 
+                default='def',
+                type=click.STRING )
+@click.option('--merged-preset', 
+                help='Parameters for merging', 
+                default='def',
+                type=click.STRING )
+@click.option('--nonchim-preset', 
+                help='Parameters for removing chimeras', 
+                default='def',
                 type=click.STRING )
 
+
 @click.pass_obj
-def dada2_full(config, sample_set_name, learn_errors_params, min_overlap, **kwargs):
+def dada2_full(config, sample_set_name, learn_errors_preset, core_algo_preset, merged_preset, nonchim_preset, **kwargs):
 
     # check if database initialized
     if config['config'].get('dada2-silva_nr_v132', None) is None:
@@ -39,14 +49,19 @@ def dada2_full(config, sample_set_name, learn_errors_params, min_overlap, **kwar
         sample_set_name = sample_set_name_gen
 
     learn_errors_result = Result.get_result_by_name('dada2-learn-errors')
-    learn_errors_preset = learn_errors_result.preset_manager.find_preset_by_name(learn_errors_params)
+    learn_errors_preset = learn_errors_result.preset_manager.find_preset_by_name(learn_errors_preset)
     if learn_errors_preset is not None:
-        learn_errors_params = learn_errors_preset['full_name']
+        learn_errors_preset = learn_errors_preset['full_name']
     else:
         click.secho('NO SUCH PRESET', fg='red')
         exit()
     # Prepare sample set file
-    res_list = prepare_sample_set_tsv_and_get_results(sample_set, sample_set_name, wc_config = config['wc_config'], learn_errors_params = learn_errors_params, min_overlap = min_overlap)
+    res_list = prepare_sample_set_tsv_and_get_results(sample_set, sample_set_name, 
+            wc_config = config['wc_config'], 
+            learn_errors_preset = learn_errors_preset, 
+            core_algo_preset = core_algo_preset, 
+            merged_preset = merged_preset, 
+            nonchim_preset = nonchim_preset)
 
     config['requests'] += res_list
 
@@ -62,7 +77,7 @@ def prepare_sample_set_tsv_and_get_results(sample_set, sample_set_name, wc_confi
     import string
     field_names = [name for text, name, spec, conv in string.Formatter().parse(dada2_set_dir_wc)]
 
-    print(field_names)
+    # print(field_names)
 
     # lst = { }
 
@@ -70,7 +85,7 @@ def prepare_sample_set_tsv_and_get_results(sample_set, sample_set_name, wc_confi
 
     dada2_dicts = []
     for s in sample_set.to_dict(orient='records'):
-        print(s)
+        # print(s)
         dada2_dicts.append(dict(mg_sample=s['df_sample'],
         R1 = wc_config['fastq_gz_file_wc'].format(fs_prefix=s['fs_prefix'], df=s['df'], preproc=s['preproc'], df_sample = s['df_sample'], strand = 'R1'), 
         R2 = wc_config['fastq_gz_file_wc'].format(fs_prefix=s['fs_prefix'], df=s['df'], preproc=s['preproc'], df_sample = s['df_sample'], strand = 'R2'),
@@ -83,12 +98,14 @@ def prepare_sample_set_tsv_and_get_results(sample_set, sample_set_name, wc_confi
     if not os.path.isfile(os.path.join(dada2_set_dir, 'samples.tsv')):
         dada2_df.to_csv(os.path.join(dada2_set_dir, 'samples.tsv'), sep='\t', index=False)
 
-    res_list = ['{fs_prefix}/{df}/dada2/{sample_set}/learn_erros__{learn_errors_params}/seqtab_nochim__{min_overlap}.rds'.format(
+    res_list = ['{fs_prefix}/{df}/dada2/{sample_set}/learn_errors__{learn_errors_preset}/core_algo__{core_algo_preset}/merged__{merged_preset}/nonchim__{nonchim_preset}/idtaxa.tsv'.format(
         fs_prefix = fs_prefix,
         df = dfs[0],
         sample_set = sample_set_name,
-        learn_errors_params = kwargs['learn_errors_params'],
-        min_overlap = kwargs['min_overlap']
+        learn_errors_preset = kwargs['learn_errors_preset'],
+        core_algo_preset = kwargs['core_algo_preset'], 
+        merged_preset    = kwargs['merged_preset'],
+        nonchim_preset   = kwargs['nonchim_preset']
     )]
 
     return res_list
