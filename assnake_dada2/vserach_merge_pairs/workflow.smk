@@ -3,8 +3,8 @@ rule vsearch_merge_pairs:
         r1 = '{fs_prefix}/{df}/reads/{preproc}/{df_sample}_R1.fastq.gz',
         r2 = '{fs_prefix}/{df}/reads/{preproc}/{df_sample}_R2.fastq.gz',
     output:
-        merged = '{fs_prefix}/{df}/reads/{preproc}__vserach_merge_pairs_{preset}/{df_sample}_MERGED.fastq.gz',
-    log: '{fs_prefix}/{df}/reads/{preproc}__vserach_merge_pairs_{preset}/{df_sample}_MERGED.log'
+        merged = '{fs_prefix}/{df}/reads/{preproc}__vserach_merge_pairs_{preset}/{df_sample}.fastq.gz',
+    log: '{fs_prefix}/{df}/reads/{preproc}__vserach_merge_pairs_{preset}/{df_sample}.log'
     threads: 12
     conda: './env.yaml'
     shell: "vsearch --fastq_mergepairs {input.r1} --reverse {input.r2} --fastqout {output.merged}\

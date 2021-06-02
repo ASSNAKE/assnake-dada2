@@ -1,1 +1,1 @@
-vsearch-merge-pairs_wc: '{fs_prefix}/{df}/reads/{preproc}__vserach_merge_pairs_{preset}/{df_sample}_MERGED.fastq.gz'
+vsearch-merge-pairs_wc: '{fs_prefix}/{df}/reads/{preproc}__vserach_merge_pairs_{preset}/{df_sample}.fastq.gz'
