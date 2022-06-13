@@ -7,6 +7,6 @@ rule dada2_nochim:
         sample_set="[\w\d_-]+",
         merged_preset="[\w\d_-]+",
         # min_overlap=" ^[0-9]+$"
-    threads: 24
+    threads: 120
     shell: ('''export LANG=en_US.UTF-8;\nexport LC_ALL=en_US.UTF-8;\n
         Rscript {seqtab_nochim_script} '{input}' '{output}' {threads};''') 

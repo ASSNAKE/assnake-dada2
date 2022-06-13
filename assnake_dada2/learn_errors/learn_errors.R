@@ -11,9 +11,9 @@ reads <- read.table(file = read_table_loc, sep = '\t', header = TRUE)
 
 
 if (strand == 'R1'){
-    err <- learnErrors(as.character(reads$R1), nbases=401912944, multithread=threads, randomize=TRUE, MAX_CONSIST=20)
+    err <- learnErrors(as.character(reads$R1), nbases=1e+09, multithread=threads, randomize=TRUE, MAX_CONSIST=20, verbose=2)
     } else if (strand == 'R2'){
-    err <- learnErrors(as.character(reads$R2), nbases=401912944, multithread=threads, randomize=TRUE, MAX_CONSIST=20)
+    err <- learnErrors(as.character(reads$R2), nbases=1e+09, multithread=threads, randomize=TRUE, MAX_CONSIST=20, verbose=2)
 }
 
 

@@ -98,7 +98,7 @@ def prepare_sample_set_tsv_and_get_results(sample_set, sample_set_name, wc_confi
     if not os.path.isfile(os.path.join(dada2_set_dir, 'samples.tsv')):
         dada2_df.to_csv(os.path.join(dada2_set_dir, 'samples.tsv'), sep='\t', index=False)
 
-    res_list = ['{fs_prefix}/{df}/dada2/{sample_set}/learn_errors__{learn_errors_preset}/core_algo__{core_algo_preset}/merged__{merged_preset}/nonchim__{nonchim_preset}/idtaxa.tsv'.format(
+    res_list = ['{fs_prefix}/{df}/dada2/{sample_set}/learn_errors__{learn_errors_preset}/core_algo__{core_algo_preset}/merged__{merged_preset}/seqtab.rds'.format(
         fs_prefix = fs_prefix,
         df = dfs[0],
         sample_set = sample_set_name,

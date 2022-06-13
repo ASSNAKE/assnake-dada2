@@ -29,6 +29,6 @@ rule dada2_derep_infer_pooled_merge:
     wildcard_constraints:    
         sample_set="[\w\d_-]+",
         merged_preset="[\w\d_-]+",
-    threads: 80
+    threads: 32
     conda: '../dada2.yaml'
     wrapper: "file://" + os.path.join(config['assnake-dada2']['install_dir'], 'derep_infer_merge/wrapper.py') 
