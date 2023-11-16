@@ -1,9 +1,8 @@
-import assnake.api.loaders
 import assnake
 from tabulate import tabulate
 import click, glob, os
 from assnake.utils.general import download_from_url
-from assnake.core.config import update_instance_config, read_assnake_instance_config
+# from assnake.core.config import update_instance_config, read_assnake_instance_config
 
 @click.command('dada2-silva-db', short_help='Initialize Silva database for DADA2')
 @click.option('--db-location','-d', 

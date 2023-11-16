@@ -14,15 +14,27 @@ read_tracking_loc <- c(args[[6]])
 
 seqtab_out <- c(args[[7]])
 
-
 library("dada2")
+library("Biostrings")
+
+# save_path <- '/mnt/disk1/RUNS/fedorov_de/DAVID/DAVID_ORIGINAL_DATA/DADA2/pooled/'
+
+# priorsR1 <- readDNAStringSet(paste(save_path, 'priorsR1.fa', sep=''), format="fasta")
+# priorsR2 <- readDNAStringSet(paste(save_path, 'priorsR2.fa', sep=''), format="fasta")
+
+# priorsR1 <- as.character(priorsR1)
+# priorsR2 <- as.character(priorsR2)
+
+
 reads <- read.table(file = read_table_loc, sep = '\t', header = TRUE)
 print(threads)
-derepR1 <- derepFastq(as.character(reads$R1))
-poolR1 <- dada(derepR1, err=errR1, multithread=threads, pool=TRUE, verbose=TRUE)
+derepR1 <- derepFastq(as.character(reads$R1), n=1e+08)
+poolR1 <- dada(derepR1, err=errR1, multithread=threads, pool='pseudo', verbose=TRUE)
+# poolR1 <- dada(derepR1, err=errR1, multithread=threads, priors=priorsR1, verbose=TRUE)
 
-derepR2 <- derepFastq(as.character(reads$R2))       
-poolR2 <- dada(derepR2, err=errR2, multithread=threads, pool=TRUE, verbose=TRUE)
+derepR2 <- derepFastq(as.character(reads$R2), n=1e+08)       
+poolR2 <- dada(derepR2, err=errR2, multithread=threads, pool='pseudo', verbose=TRUE)
+# poolR2 <- dada(derepR2, err=errR2, multithread=threads, priors=priorsR2, verbose=TRUE)
 # saveRDS(pool, out)
 # saveRDS(derep, derep_out)
 # saveRDS(pool, out)

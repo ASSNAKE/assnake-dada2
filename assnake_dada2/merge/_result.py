@@ -1,5 +1,5 @@
 import os
-from assnake.core.result import Result
+from assnake.core.Result import Result
 
 result = Result.from_location(name='dada2-merge',
                               description='Merge strands of your samples with DADA2',

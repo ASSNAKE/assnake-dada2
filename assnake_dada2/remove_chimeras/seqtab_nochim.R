@@ -7,6 +7,6 @@ out <- c(args[[2]])
 threads <- as.integer(args[[3]])
 
 library("dada2")
-seqtab_nochim <- removeBimeraDenovo(seqtab, allowOneOff=F, method="pooled", verbose=TRUE, multithread=threads)
+seqtab_nochim <- removeBimeraDenovo(seqtab, allowOneOff=F, method="consensus", verbose=TRUE, multithread=threads)
 saveRDS(seqtab_nochim, out)
 

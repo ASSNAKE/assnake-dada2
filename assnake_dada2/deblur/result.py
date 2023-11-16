@@ -1,6 +1,6 @@
 
 import click, os
-from assnake.core.result import Result
+from assnake.core.Result import Result
 
 result = Result.from_location(name='deblur',
                               description='Ultra-fast and memory-efficient NGS assembler',

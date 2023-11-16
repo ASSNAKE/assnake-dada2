@@ -1,12 +1,11 @@
-import assnake.api.loaders
 import assnake
 from tabulate import tabulate
 import click
-from assnake.core.sample_set import generic_command_individual_samples, generate_result_list
-from assnake.core.command_builder import sample_set_construction_options, add_options
+# from assnake.core.sample_set import generic_command_individual_samples, generate_result_list
+from assnake.cli.command_builder import sample_set_construction_options, add_options
 import os, datetime 
 import pandas as pd
-from assnake.core.result import Result
+from assnake.core.Result import Result
 
 
 @click.command('dada2-full', short_help='Execute full dada2 pipeline')
@@ -98,7 +97,7 @@ def prepare_sample_set_tsv_and_get_results(sample_set, sample_set_name, wc_confi
     if not os.path.isfile(os.path.join(dada2_set_dir, 'samples.tsv')):
         dada2_df.to_csv(os.path.join(dada2_set_dir, 'samples.tsv'), sep='\t', index=False)
 
-    res_list = ['{fs_prefix}/{df}/dada2/{sample_set}/learn_errors__{learn_errors_preset}/core_algo__{core_algo_preset}/merged__{merged_preset}/seqtab.rds'.format(
+    res_list = ['{fs_prefix}/{df}/dada2/{sample_set}/learn_errors__{learn_errors_preset}/core_algo__{core_algo_preset}/merged__{merged_preset}/nonchim__{nonchim_preset}/seqtab.rds'.format(
         fs_prefix = fs_prefix,
         df = dfs[0],
         sample_set = sample_set_name,
