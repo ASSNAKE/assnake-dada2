@@ -1,57 +1,71 @@
-args <- commandArgs(TRUE)
+# Load required libraries
+library(argparse)
+library(dada2)
+library(Biostrings)
 
-# LOAD PARAMS
-read_table_loc <- c(args[[1]])
+#' Process sequencing data.
+#' 
+#' This function takes input file paths and parameters for denoising and merging paired-end sequencing data,
+#' and performs the following steps:
+#' 1. Load sequencing data from input file.
+#' 2. Denoise R1 reads using DADA2.
+#' 3. Denoise R2 reads using DADA2.
+#' 4. Merge paired-end reads.
+#' 5. Save merged sequences, sequence table, and tracking information.
+#' 
+#' @param input_file Path to the input file containing sequencing data (in TSV format).
+#' @param errR1 Path to the error rate file for R1 reads (RDS format).
+#' @param errR2 Path to the error rate file for R2 reads (RDS format).
+#' @param output_file Path to the output file for merged sequences (RDS format).
+#' @param threads Number of threads for parallel processing.
+#' @param read_tracking Path to the read tracking output file (TSV format).
+#' @param seqtab_output Path to the sequence table output file (RDS format).
+#' @return NULL
+#' @export
+process_sequencing_data <- function(input_file, errR1, errR2, output_file, threads, read_tracking, seqtab_output) {
+  # Load sequencing data
+  reads <- read.table(file = input_file, sep = '\t', header = TRUE)
+  
+  # Denoise R1
+  derepR1 <- derepFastq(as.character(reads$R1), n=1e+08)
+  poolR1 <- dada(derepR1, err=readRDS(errR1), multithread=threads, pool=FALSE, verbose=TRUE)
+  
+  # Denoise R2
+  derepR2 <- derepFastq(as.character(reads$R2), n=1e+08)
+  poolR2 <- dada(derepR2, err=readRDS(errR2), multithread=threads, pool=FALSE, verbose=TRUE)
+  
+  # Merge paired-end reads
+  mergers <- mergePairs(poolR1, derepR1, poolR2, derepR2, verbose=TRUE, minOverlap = 18)
+  
+  # Save results
+  saveRDS(mergers, output_file)
+  
+  # Create sequence table
+  seqtab <- makeSequenceTable(mergers)
+  saveRDS(seqtab, seqtab_output)
+  
+  # Calculate and save tracking information
+  getN <- function(x) sum(getUniques(x))
+  track <- cbind(sapply(derepR1, getN), sapply(derepR2, getN), sapply(poolR1, getN), sapply(poolR2, getN), sapply(mergers, getN))
+  print(track)
+  colnames(track) <- c('derepR1', 'derepR2', "denoisedF", "denoisedR", "merged")
+  write.table(track, read_tracking, sep='\t', col.names = NA, quote = FALSE)
+}
 
-errR1 <- readRDS(args[[2]])
-errR2 <- readRDS(args[[3]])
+# Create an argument parser
+parser <- ArgumentParser(description = "Denoising and merging paired-end sequencing data")
 
-out <- c(args[[4]])
+# Define command-line arguments with descriptions
+parser$add_argument("--input-file", type = "character", help = "Path to the input file containing sequencing data (in TSV format)")
+parser$add_argument("--errR1", type = "character", help = "Path to the error rate file for R1 reads (RDS format)")
+parser$add_argument("--errR2", type = "character", help = "Path to the error rate file for R2 reads (RDS format)")
+parser$add_argument("--output-file", type = "character", help = "Path to the output file for merged sequences (RDS format)")
+parser$add_argument("--threads", type = "integer", help = "Number of threads for parallel processing") 
+parser$add_argument("--read-tracking", type = "character", help = "Path to the read tracking output file (TSV format)")
+parser$add_argument("--seqtab-output", type = "character", help = "Path to the sequence table output file (RDS format)")
 
-threads <- as.integer(args[[5]])
+# Parse command-line arguments
+args <- parser$parse_args()
 
-read_tracking_loc <- c(args[[6]])
-
-seqtab_out <- c(args[[7]])
-
-library("dada2")
-library("Biostrings")
-
-# save_path <- '/mnt/disk1/RUNS/fedorov_de/DAVID/DAVID_ORIGINAL_DATA/DADA2/pooled/'
-
-# priorsR1 <- readDNAStringSet(paste(save_path, 'priorsR1.fa', sep=''), format="fasta")
-# priorsR2 <- readDNAStringSet(paste(save_path, 'priorsR2.fa', sep=''), format="fasta")
-
-# priorsR1 <- as.character(priorsR1)
-# priorsR2 <- as.character(priorsR2)
-
-
-reads <- read.table(file = read_table_loc, sep = '\t', header = TRUE)
-print(threads)
-derepR1 <- derepFastq(as.character(reads$R1), n=1e+08)
-poolR1 <- dada(derepR1, err=errR1, multithread=threads, pool='pseudo', verbose=TRUE)
-# poolR1 <- dada(derepR1, err=errR1, multithread=threads, priors=priorsR1, verbose=TRUE)
-
-derepR2 <- derepFastq(as.character(reads$R2), n=1e+08)       
-poolR2 <- dada(derepR2, err=errR2, multithread=threads, pool='pseudo', verbose=TRUE)
-# poolR2 <- dada(derepR2, err=errR2, multithread=threads, priors=priorsR2, verbose=TRUE)
-# saveRDS(pool, out)
-# saveRDS(derep, derep_out)
-# saveRDS(pool, out)
-# saveRDS(derep, derep_out)
-
-mergers <- mergePairs(poolR1, derepR1, poolR2, derepR2, verbose=TRUE, minOverlap = 18)
-saveRDS(mergers, out)
-
-seqtab <- makeSequenceTable(mergers)
-saveRDS(seqtab, seqtab_out)
-
-
-getN <- function(x) sum(getUniques(x))
-
-track <- cbind(sapply(derepR1, getN), sapply(derepR2, getN),sapply(poolR1, getN), sapply(poolR2, getN), sapply(mergers, getN))
-
-colnames(track) <- c('derepR1', 'derepR2', "denoisedF", "denoisedR", "merged")
-
-write.table(track, read_tracking_loc, sep='\t', col.names = NA, quote = FALSE)
-
+# Call the processing function with parsed arguments
+process_sequencing_data(args$input_file, args$errR1, args$errR2, args$output_file, args$threads, args$read_tracking, args$seqtab_output)

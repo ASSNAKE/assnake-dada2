@@ -1,0 +1,3 @@
+dada2-export-asv-table_wc: '{fs_prefix}/{df}/feature_tables/{sample_set}/dada2_learn_errors_{learn_errors_preset}__core_algo__{core_algo_preset}__merged__{merged_preset}__nonchim__{nonchim_preset}/asv_table.rds'
+dada2-export-asv-table_sample_set_tsv_wc: '{fs_prefix}/{df}/dada2/{sample_set}/sample_set.tsv'
+dada2-export-asv-table_sample_set_dir_wc: '{fs_prefix}/{df}/dada2/{sample_set}/'

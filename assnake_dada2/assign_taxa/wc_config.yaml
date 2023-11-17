@@ -1,0 +1,3 @@
+dada2-assign-taxa_wc: '{fs_prefix}/{df}/feature_tables/{sample_set}/dada2_{dada2preset}/taxa.rds'
+dada2-assign-taxa_sample_set_tsv_wc: '{fs_prefix}/{df}/dada2/{sample_set}/sample_set.tsv'
+dada2-assign-taxa_sample_set_dir_wc: '{fs_prefix}/{df}/dada2/{sample_set}/'

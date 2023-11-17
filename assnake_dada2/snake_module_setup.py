@@ -1,7 +1,6 @@
 import os
 import assnake
 
-from assnake_dada2.invocation_commands import dada2_full
 from assnake_dada2.init_dada2 import dada2_init
 
 snake_module = assnake.SnakeModule(name = 'assnake-dada2', 
@@ -15,6 +14,6 @@ snake_module = assnake.SnakeModule(name = 'assnake-dada2',
                             #    './derep_infer_pooled/workflow.smk',
                                './track_reads/workflow.smk',
                            ],
-                           invocation_commands = [dada2_full],
+                        #    invocation_commands = [dada2_full],
                            initialization_commands = [dada2_init]
                            )

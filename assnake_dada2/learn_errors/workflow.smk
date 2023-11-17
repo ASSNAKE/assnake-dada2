@@ -22,7 +22,7 @@ rule dada2_list_from_sample_set:
                 R2 = wc_config['fastq_gz_file_wc'].format(fs_prefix=s['fs_prefix'], df=s['df'], preproc=s['preproc'], df_sample = s['df_sample'], strand = 'R2'),
             ))
         dada2_df = pd.DataFrame(dada2_dicts)
-        os.makedirs(dada2_set_dir, exist_ok=True)
+        # os.makedirs(os.path.basepath(input.sample_set_loc), exist_ok=True)
 
         if not os.path.isfile(output.sample_list):
             dada2_df.to_csv(output.sample_list, sep='\t', index=False)
