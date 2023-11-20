@@ -2,7 +2,7 @@
 import os
 from assnake.core.Result import Result
 
-result = Result.from_location(name='create_phyloseq',
+result = Result.from_location(name='dada2-create-phyloseq',
                               description='Create phyloseq object from provided otu and taxa rds files',
                               result_type='phyloseq',
                               input_type='illumina_sample_set',
