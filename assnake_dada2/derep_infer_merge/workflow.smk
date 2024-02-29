@@ -14,7 +14,6 @@
 #     conda: '../dada2.yaml'
 #     wrapper: "file://" + os.path.join(config['assnake-dada2']['install_dir'], 'derep_infer_merge/wrapper.py') 
 
-
 rule dada2_derep_infer_pooled_merge:
     input: 
         samples_list   = '{fs_prefix}/{df}/dada2/{sample_set}_{sample_set_hash}/samples_{sample_set_hash}_R1.tsv',
