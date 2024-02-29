@@ -1,6 +1,7 @@
 import yaml
 
 def get_dada2_asv_table_path_from_metadata(wildcards):
+    print(wildcards)
     # Construct the path to the metadata file using the given wildcards
     ft_meta_loc = '{fs_prefix}/{df}/feature_tables/{sample_set}/{ft_name}/metadata.yaml'.format(**wildcards)
     
@@ -32,5 +33,7 @@ rule dada2_export_feature_table:
         source_file = get_dada2_asv_table_path_from_metadata
     output: asv_table = '{fs_prefix}/{df}/feature_tables/{sample_set}/{ft_name}/asv_table.rds'
     wildcard_constraints:    
-        df="[\w\d_-]+"
+        df="[\w\d_-]+",
+        ft_name="[\w\d_-]+",
+        sample_set="[\w\d_-]+",
     shell: "cp {input.source_file} {output.asv_table}"
