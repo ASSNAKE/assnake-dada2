@@ -1,5 +1,5 @@
 import os
-from assnake.core.result import Result
+from assnake.core.Result import Result
 
 result = Result.from_location(name='vsearch-merge-pairs',
                               description='Merge paired-end reads into one sequence with Vsearch',

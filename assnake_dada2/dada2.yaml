@@ -6,3 +6,4 @@ channels:
 dependencies:
   - bioconductor-dada2
   - icu
+  - r-argparse
