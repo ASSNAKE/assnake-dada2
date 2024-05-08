@@ -1,7 +1,6 @@
 import yaml
 
 def get_dada2_asv_table_path_from_metadata(wildcards):
-    print(wildcards)
     # Construct the path to the metadata file using the given wildcards
     ft_meta_loc = '{fs_prefix}/{df}/feature_tables/{sample_set}/{ft_name}/metadata.yaml'.format(**wildcards)
     

@@ -1,3 +1,3 @@
-dada2-learn-errors_sample_set_tsv_wc: '{fs_prefix}/{df}/dada2/{sample_set}/sample_set.tsv'
-dada2-learn-errors_sample_set_dir_wc: '{fs_prefix}/{df}/dada2/{sample_set}/'
+dada2-learn-errors_sample_set_tsv_wc: '{fs_prefix}/{df}/sample_collections/{sample_set}/sample_set.tsv'
+dada2-learn-errors_sample_set_dir_wc: '{fs_prefix}/{df}/sample_collections/{sample_set}/'
 dada2-learn-errors_wc :               '{fs_prefix}/{df}/dada2/{sample_set}/learn_errors__{preset}/err{strand}.rds'

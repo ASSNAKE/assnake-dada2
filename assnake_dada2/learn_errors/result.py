@@ -7,4 +7,5 @@ result = Result.from_location(name='dada2-learn-errors',
                               input_type='illumina_sample_set',
                               with_presets=True,
                               preset_file_format='yaml',
+                              depends_on='',
                               location=os.path.dirname(os.path.abspath(__file__)))

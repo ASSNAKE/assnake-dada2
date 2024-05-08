@@ -8,7 +8,7 @@ shell(
     '''
     export LANG=en_US.UTF-8;\nexport LC_ALL=en_US.UTF-8;\n
     Rscript {infer_pooled_script} \
-        --input-file {snakemake.input.samples_list} \
+        --input-file {snakemake.input.samples_list_r1} \
         --errR1 {snakemake.input.errR1} \
         --errR2 {snakemake.input.errR2} \
         --output-file {snakemake.output.mergers} \

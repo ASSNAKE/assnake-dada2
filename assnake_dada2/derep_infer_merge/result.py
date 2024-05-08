@@ -7,4 +7,5 @@ result = Result.from_location(name='dada2-derep-infer-merge',
                               input_type='illumina_sample_set',
                               with_presets=False,
                               preset_file_format='yaml',
+                              depends_on = 'dada2-learn-errors',
                               location=os.path.dirname(os.path.abspath(__file__)))

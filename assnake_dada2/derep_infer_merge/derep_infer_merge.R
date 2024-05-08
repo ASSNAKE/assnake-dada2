@@ -28,14 +28,14 @@ process_sequencing_data <- function(input_file, errR1, errR2, output_file, threa
   
   # Denoise R1
   derepR1 <- derepFastq(as.character(reads$R1), n=1e+08)
-  poolR1 <- dada(derepR1, err=readRDS(errR1), multithread=threads, pool=FALSE, verbose=TRUE)
+  poolR1 <- dada(derepR1, err=readRDS(errR1), multithread=threads, pool=TRUE, verbose=TRUE)
   
   # Denoise R2
   derepR2 <- derepFastq(as.character(reads$R2), n=1e+08)
-  poolR2 <- dada(derepR2, err=readRDS(errR2), multithread=threads, pool=FALSE, verbose=TRUE)
+  poolR2 <- dada(derepR2, err=readRDS(errR2), multithread=threads, pool=TRUE, verbose=TRUE)
   
   # Merge paired-end reads
-  mergers <- mergePairs(poolR1, derepR1, poolR2, derepR2, verbose=TRUE, minOverlap = 18)
+  mergers <- mergePairs(poolR1, derepR1, poolR2, derepR2, verbose=TRUE, minOverlap = 12, maxMismatch = 1)
   
   # Save results
   saveRDS(mergers, output_file)
