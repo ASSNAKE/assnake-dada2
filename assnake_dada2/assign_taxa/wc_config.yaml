@@ -1,4 +1,5 @@
-dada2-assign-taxa_wc: '{fs_prefix}/{df}/feature_tables/{sample_set}/{ft_name}/taxa.rds'
+dada2-assign-taxa_wc: '{fs_prefix}/{df}/dada2/{sample_set}/learn_errors__{learn_errors_preset}/core_algo__{core_algo_preset}/merged__{merged_preset}/nonchim__{nonchim_preset}/taxa_{taxa_algo_preset}__{db_preset}__{pr_preset}.rds'
+dada2-assign-taxa_source_wc: '{fs_prefix}/{df}/dada2/{sample_set}/learn_errors__{learn_errors_preset}/core_algo__{core_algo_preset}/merged__{merged_preset}/nonchim__{nonchim_preset}/taxa_{taxa_algo_preset}__{db_preset}__{pr_preset}.rds'
 dada2-assign-taxa_sample_set_tsv_wc: '{fs_prefix}/{df}/dada2/{sample_set}/sample_set.tsv'
 dada2-assign-taxa_sample_set_dir_wc: '{fs_prefix}/{df}/dada2/{sample_set}/'
 

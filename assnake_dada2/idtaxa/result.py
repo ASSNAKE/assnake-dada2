@@ -3,13 +3,12 @@ from assnake.core.Result import Result
 from assnake.core.inputs.FeatureTableInput import FeatureTableInput
 from assnake.core.inputs.FeatureTableFeatureMeta import FeatureTableFeatureMeta
 
+from assnake_dada2.assign_taxa.result import AsvTaxaTable
 from assnake_dada2.export_asv_table import Dada2FeatureTable
     
-class AsvTaxaTable(FeatureTableFeatureMeta):
-    metadata_filename = 'asv_taxa.meta.yaml'
 
-result = Result.from_location(name='dada2-assign-taxa',
-                              description='Assign taxonomy using DADA2 algo',
+result = Result.from_location(name='decipher-idTaxa',
+                              description='Assign taxonomy using idTaxa',
                               result_type = 'feature_table',
                               input_type='feature_table',
                               with_presets=False,
